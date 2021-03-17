@@ -2,7 +2,7 @@
 
 ## Requirements
 
-`rbm` is developed and implemented using [rust](https://www.rust-lang.org/) and uses [MySQL](https://www.mysql.com/) database as a backend.
+`rbm` is developed and implemented using [Rust](https://www.rust-lang.org/) and uses [MySQL](https://www.mysql.com/) database as a backend.  
 Run the following command to fulfill the requirements :
 
 ``` sh
@@ -16,7 +16,7 @@ cargo install diesel_cli --no-default-features --features mysql
 
 ## Setup MySQL database
 
-A `.env.example` at the root directory exposes environment both used by `diesel` and `rbm` itself.
+A `.env.example` at the root directory exposes environment both used by [diesel](https://diesel.rs/) and `rbm` itself.  
 Rename it to `.env` then set all the environment variables before running the following commands :
 
 ``` sh
