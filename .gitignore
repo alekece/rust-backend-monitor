@@ -16,5 +16,3 @@ Cargo.lock
 
 .env
 .envrc
-run.sh
-api.http
