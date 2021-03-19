@@ -13,5 +13,16 @@ services:
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "${DATABASE_PORT}:3306"
+
+  server:
+    build: .
+    depends_on:
+      - db
+    environment:
+      RUST_LOG: "${RUST_LOG}"
+      DATABASE_URL: "mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:3306/${DATABASE_NAME}"
+    ports:
+      - "${PORT}:8000"
+
 volumes:
   database_data: {}
