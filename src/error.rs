@@ -16,7 +16,7 @@ pub enum Error {
   MigrationError(#[from] diesel_migrations::RunMigrationsError),
   /// Error propagated from the MySQL backend
   #[error(transparent)]
-  PostgresError(#[from] diesel::result::Error),
+  MysqlError(#[from] diesel::result::Error),
   #[error("Resource not found")]
   NotFound,
   #[error("Command is already completed")]
