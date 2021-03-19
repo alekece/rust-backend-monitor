@@ -2,7 +2,7 @@ FROM rust:1.50
 MAINTAINER Alexis Le Provost <alexis.leprovost@outlook.com>
 
 WORKDIR /usr/src/rust-backend-monitor
-COPY Cargo.toml Cargo.lock diesel.toml scripts/run.sh ./
+COPY Cargo.toml diesel.toml scripts/run.sh ./
 COPY src src
 COPY migrations migrations
 
