@@ -1,62 +1,76 @@
 # rust-backend-monitor
 
-## Requirements
-
 `rbm` is developed and implemented using [Rust](https://www.rust-lang.org/) and uses [MySQL](https://www.mysql.com/) database as a backend.  
-Run the following command to fulfill the requirements :
 
-``` sh
-# install rust and cargo alongside rustup
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# install MySQL client
-sudo apt install libmysqlclient-dev
-# install ORM and query builder
-cargo install diesel_cli --no-default-features --features mysql
-```
-
-## Setup MySQL database
+## Setup environment
 
 A `.env.example` at the root directory exposes environment both used by [diesel](https://diesel.rs/) and `rbm` itself.  
 Rename it to `.env` then set all the environment variables before running the following commands :
 
 ``` sh
-docker-compose up -d
-# wait until the service is up
+source .env
+```
+
+## Build within a docker container
+
+Simply run `docker-compose up -d` and that's it !
+
+## Build locally
+
+### Requirements
+
+Run the following command to fulfill the requirements :
+
+``` sh
+# install MySQL dependencies
+apt install libmysqlclient-dev
+# install rust and cargo alongside rustup
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# install ORM and query builder
+cargo install diesel_cli --no-default-features --features mysql
+```
+
+### Setup MySQL database
+
+
+``` sh
+# start MySQL server
+systemctl start mysql
+# wait until the service is up then create the setup the database
 diesel setup
 ```
 
-## Build `rbm`
+### Launch `rbm` locally
 
-``` sh
-cargo build --release
-# fastping-rs requires the ability to create raw sockets
-sudo setcap cap_net_raw=eip ./target/release/rbm
-```
+1. build the sources
 
-### Known issues
+    ``` sh
+    cargo build --release
+    # fastping-rs requires the ability to create raw sockets
+    sudo setcap cap_net_raw=eip ./target/release/rbm
+    ```
 
-If the build fails, make sure to use an up-to-date rust version
+    If the build fails, make sure to use an up-to-date rust version
 
-``` sh
-rustup update
-```
+    ``` sh
+    rustup update
+    ```
 
-## How to launch it ?
+2. Launch `rbm` by running :
 
-To launch `rbm`, use `cargo` by running :
+    ``` sh
+    cargo run --release -- <arguments>
+    ```
 
-``` sh
-cargo run --release -- <arguments>
-```
+    Or by executing the `rbm` binary directly :
 
-Or by executing the `rbm` binary directly :
-
-``` sh
-./target/release/rbm <arguments>
-```
+    ``` sh
+    ./target/release/rbm <arguments>
+    ```
 
 To print the `rbm` usage, an option `-h` is available.
 
+ 
 ## Usage
 
 ```
@@ -66,7 +80,6 @@ USAGE:
     rbm [FLAGS] --database-url <database-url> --port <port>
 
 FLAGS:
-        --embed-migration
     -h, --help               Prints help information
     -V, --version            Prints version information
 
