@@ -6,12 +6,10 @@ use url::Url;
 
 #[derive(StructOpt)]
 struct Opt {
-  #[structopt(short, long, env = "PORT")]
+  #[structopt(short, long, default_value = "8000", env = "PORT")]
   pub port: u16,
   #[structopt(long, env = "DATABASE_URL")]
   pub database_url: Url,
-  #[structopt(long)]
-  pub embed_migration: bool,
 }
 
 #[actix_web::main]
@@ -20,11 +18,6 @@ async fn main() -> Result<()> {
 
   let opt = Opt::from_args();
   let backend = Arc::new(MysqlBackend::new(opt.database_url)?);
-
-  if opt.embed_migration {
-    backend.migrate()?;
-  }
-
   let channel = daemon::start(backend.clone())?;
 
   HttpServer::new(move || {
@@ -47,7 +40,7 @@ async fn main() -> Result<()> {
           .service(routes::create_monitor),
       )
   })
-  .bind(format!("127.0.0.1:{}", opt.port))?
+  .bind(format!("0.0.0.0:{}", opt.port))?
   .run()
   .await
 }
