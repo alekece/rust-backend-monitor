@@ -99,7 +99,7 @@ impl FromSql<Text, Mysql> for MonitorType {
     match not_none!(bytes) {
       b"HTTP" => Ok(Self::Http),
       b"HTTPS" => Ok(Self::Https),
-      b"SSL" => Ok(Self::Https),
+      b"SSL" => Ok(Self::Ssl),
       b"PING" => Ok(Self::Ping),
       b"DNS" => Ok(Self::Dns),
       _ => Err("Unrecognized monitor type".into()),
