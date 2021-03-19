@@ -24,13 +24,6 @@ impl MysqlBackend {
     Ok(Self { connection_pool })
   }
 
-  pub fn migrate(&self) -> Result<(), Error> {
-    Ok(embedded_migrations::run_with_output(
-      &self.get_connection()?,
-      &mut std::io::stdout(),
-    )?)
-  }
-
   /// Retrieve a connection from the connection pool.
   pub fn get_connection(
     &self,
