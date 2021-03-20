@@ -11,6 +11,7 @@ use diesel::{
 };
 use serde::{Deserialize, Serialize};
 use std::{fmt, io::Write, net::IpAddr};
+use url::Url;
 
 #[derive(Deserialize, Insertable)]
 #[table_name = "status"]
@@ -123,17 +124,27 @@ pub struct NewMonitor {
 impl NewMonitor {
   pub fn validate(&self) -> Result<(), Error> {
     match self.type_ {
+      MonitorType::Http => Url::parse(&self.endpoint)
+        .map(|_| ())
+        .map_err(|e| Error::InvalidEndpoint(e.to_string())),
+      MonitorType::Https => Url::parse(&self.endpoint)
+        .map_err(|e| Error::InvalidEndpoint(e.to_string()))
+        .and_then(|url| match url.scheme() {
+          "https" => Ok(()),
+          _ => Err(Error::InvalidEndpoint(String::from(
+            "URL scheme must be https",
+          ))),
+        }),
       MonitorType::Ping => self
         .max_latency_ms
-        .map(|_| ())
         .ok_or_else(|| Error::InvalidMonitoring(String::from("missing 'max_latency_ms'")))
         .and_then(|_| {
           self
             .endpoint
             .parse::<IpAddr>()
-            .map_err(|_| Error::InvalidMonitoring(String::from("'endpoint' must be a valid IP")))
-            .map(|_| ())
-        }),
+            .map_err(|e| Error::InvalidIp(e.to_string()))
+        })
+        .map(|_| ()),
       MonitorType::Ssl => self.minimum_expiration_time_d.map(|_| ()).ok_or_else(|| {
         Error::InvalidMonitoring(String::from("missing 'minimum_expiration_time_d'"))
       }),
@@ -142,7 +153,6 @@ impl NewMonitor {
         .clone()
         .map(|_| ())
         .ok_or_else(|| Error::InvalidMonitoring(String::from("missing 'expected_id'"))),
-      _ => Ok(()),
     }
   }
 }
