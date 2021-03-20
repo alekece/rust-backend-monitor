@@ -1,6 +1,6 @@
 [package]
 name = "rbm"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Alexis Le Provost <alexis.le-provost@ledger.fr>"]
 edition = "2018"
 
