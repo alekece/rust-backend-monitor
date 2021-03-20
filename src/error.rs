@@ -25,6 +25,10 @@ pub enum Error {
   UnknownRoute,
   #[error("Invalid monitoring: {0}")]
   InvalidMonitoring(String),
+  #[error("Invalid endpoint: {0}")]
+  InvalidEndpoint(String),
+  #[error("Invalid IP: {0}")]
+  InvalidIp(String),
 }
 
 #[derive(Serialize)]
@@ -38,7 +42,9 @@ impl Error {
   pub fn name(&self) -> String {
     match *self {
       Self::NotFound | Self::UnknownRoute => String::from("Not found"),
-      Self::InvalidMonitoring(..) => String::from("Bad request"),
+      Self::InvalidMonitoring(..) | Self::InvalidEndpoint(..) | Self::InvalidIp(..) => {
+        String::from("Bad request")
+      }
       Self::CommandAlreadyCompleted => String::from("Conflict"),
       _ => String::from("Internal server error"),
     }
@@ -56,7 +62,9 @@ impl ResponseError for Error {
     match *self {
       Self::NotFound | Self::UnknownRoute => StatusCode::NOT_FOUND,
       Self::CommandAlreadyCompleted => StatusCode::CONFLICT,
-      Self::InvalidMonitoring(..) => StatusCode::BAD_REQUEST,
+      Self::InvalidMonitoring(..) | Self::InvalidEndpoint(..) | Self::InvalidIp(..) => {
+        StatusCode::BAD_REQUEST
+      }
       _ => StatusCode::INTERNAL_SERVER_ERROR,
     }
   }
