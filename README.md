@@ -90,35 +90,35 @@ OPTIONS:
 
 ## API routes
 
-| Method | Path                          | Request                             | Response                            | Code |
-|--------|-------------------------------|-------------------------------------|-------------------------------------|------|
-| POST   | /api/commands                 | `{`                                 | `{`                                 | 201  |
-|        |                               | `"serial" : string`                 | `"id" : u64,`                       |      |
-|        |                               | `}`                                 | `"serial" : string,`                |      |
-|        |                               |                                     | `}`                                 |      |
-| PUT    | /api/commands/{id}/done       |                                     |                                     | 204  |
-| GET    | /api/commands?serial={serial} |                                     | `{`                                 | 200  |
-|        |                               |                                     | `"id" : u64,`                       |      |
-|        |                               |                                     | `"serial" : string,`                |      |
-|        |                               |                                     | `}`                                 |      |
-| POST   | /api/external_monitors        | `{`                                 | `{`                                 | 201  |
-|        |                               | `"serial" : string,`                | `"id" : u64,`                       |      |
-|        |                               | `"cpu_usage" : u8,`                 | `"created_at" : datetime,"`         |      |
-|        |                               | `"memory_usage" : u8,`              | `"serial" : string,`                |      |
-|        |                               | `"disk_usage" : u8,`                | `"cpu_usage" : u8,`                 |      |
-|        |                               | `"status" : string`                 | `"memory_usage" : u8,`              |      |
-|        |                               | `}`                                 | `"disk_usage" : u8,`                |      |
-|        |                               |                                     | `"status" : string`                 |      |
-|        |                               |                                     | `}`                                 |      |
-| POST   | /api/monitors                 | `{`                                 | `{`                                 | 201  |
-|        |                               | `"type" : "HTTP,HTTPS,PING,DNS",`   | `"id" : u64,`                       |      |
-|        |                               | `"frequency_min" : u16,`            | `"type" : "HTTP,HTTPS,PING,DNS",`   |      |
-|        |                               | `"endpoint" : string,`              | `"frequency_min" : u16,`            |      |
-|        |                               | `"minimum_expiration_time_d" : u32` | `"endpoint" : string,`              |      |
-|        |                               | `"max_latency_ms" : u32`            | `"minimum_expiration_time_d" : u32` |      |
-|        |                               | `"expected_ip" : string`            | `"max_latency_ms" : u32`            |      |
-|        |                               | `}`                                 | `"expected_ip" : string`            |      |
-|        |                               |                                     | `}`                                 |      |
+| Method | Path                          | Request                               | Response                              | Code |
+|--------|-------------------------------|---------------------------------------|---------------------------------------|------|
+| POST   | /api/commands                 | `{`                                   | `{`                                   | 201  |
+|        |                               | `"serial" : string`                   | `"id" : u64,`                         |      |
+|        |                               | `}`                                   | `"serial" : string,`                  |      |
+|        |                               |                                       | `}`                                   |      |
+| PUT    | /api/commands/{id}/done       |                                       |                                       | 204  |
+| GET    | /api/commands?serial={serial} |                                       | `{`                                   | 200  |
+|        |                               |                                       | `"id" : u64,`                         |      |
+|        |                               |                                       | `"serial" : string,`                  |      |
+|        |                               |                                       | `}`                                   |      |
+| POST   | /api/external_monitors        | `{`                                   | `{`                                   | 201  |
+|        |                               | `"serial" : string,`                  | `"id" : u64,`                         |      |
+|        |                               | `"cpu_usage" : u8,`                   | `"created_at" : datetime,"`           |      |
+|        |                               | `"memory_usage" : u8,`                | `"serial" : string,`                  |      |
+|        |                               | `"disk_usage" : u8,`                  | `"cpu_usage" : u8,`                   |      |
+|        |                               | `"status" : string`                   | `"memory_usage" : u8,`                |      |
+|        |                               | `}`                                   | `"disk_usage" : u8,`                  |      |
+|        |                               |                                       | `"status" : string`                   |      |
+|        |                               |                                       | `}`                                   |      |
+| POST   | /api/monitors                 | `{`                                   | `{`                                   | 201  |
+|        |                               | `"type" : "HTTP,HTTPS,SSL,PING,DNS",` | `"id" : u64,`                         |      |
+|        |                               | `"frequency_min" : u16,`              | `"type" : "HTTP,HTTPS,SSL,PING,DNS",` |      |
+|        |                               | `"endpoint" : string,`                | `"frequency_min" : u16,`              |      |
+|        |                               | `"minimum_expiration_time_d" : u32`   | `"endpoint" : string,`                |      |
+|        |                               | `"max_latency_ms" : u32`              | `"minimum_expiration_time_d" : u32`   |      |
+|        |                               | `"expected_ip" : string`              | `"max_latency_ms" : u32`              |      |
+|        |                               | `}`                                   | `"expected_ip" : string`              |      |
+|        |                               |                                       | `}`                                   |      |
 
 An error may occurred when calling this API routes then the HTTP response  
 will be a JSON containing the reason of such a failure :
